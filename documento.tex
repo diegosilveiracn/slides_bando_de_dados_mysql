@@ -5,6 +5,8 @@
 \usepackage[T1]{fontenc}
 \usepackage{listings}
 
+\usepackage{adjustbox}
+
 \usetheme{Madrid}
 \setbeamertemplate{navigation symbols}{}
 
@@ -111,6 +113,421 @@ diego.nascimento@ifrn.edu.br
 \begin{frame}
 \frametitle{Banco de Dados}
 
+\begin{block}{Definição}
+	São conjuntos de registros dispostos em estrutura regular que possibilita a
+	organização dos dados e produção de informação.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Sistema Gerenciador de Banco de Dados (SGBD)}
+
+\begin{block}{Definição}
+É uma coleção de programas de propósito geral que facilita os processos de
+definição, construção, manipulação e compartilhamento de bancos entre
+vários usuários e aplicações.
+\end{block}
+\end{frame}
+
+\section{Abordagem Entidade-relacionamento}
+
+\begin{frame}
+\frametitle{Modelo de 	Banco de Dados}
+
+\begin{block}{Definição}
+	É uma descrição dos tipos de informações que estão armazenadas em um
+	banco de dados.
+\end{block} \vfill
+
+\begin{itemize}
+	\item Para construir um modelo de dados usa-se uma linguagem de
+	modelagem de dados;
+	\item A linguagem de modelagem pode ser textual ou gráfica;
+	\item Existem linguagens de modelagem para descrever modelos de dados
+	em diferentes níveis de abstração e objetivos; e
+	\item Cada representação de um modelo de dados recebe a denominação de
+	esquema de banco de dados.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Entidade}
+
+\begin{block}{Definição}
+	Conjunto de objetos da realidade modelada sobre os quais deseja-se manter
+	informações o banco de dados.
+\end{block} 
+\end{frame}
+
+\begin{frame}
+\frametitle{Atributo}
+
+\begin{block}{Definição}
+	Dado que é associado a cada ocorrêcia de uma entidade.
+\end{block} 
+\end{frame}
+
+\begin{frame}
+\frametitle{Identificador da Entidade}
+
+\begin{block}{Definição}
+	Um identificador é um conjunto de um ou mais atributos (e possivelmente
+	relacionamentos, como visto abaixo) cujos valores servem para distinguir
+	uma ocorrência da entidade das demais ocorrências da mesma entidade.
+\end{block} \vfill
+
+A identificação pode ser:
+\begin{itemize}
+	\item Simples; ou
+	\item Composta.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Relacionamento}
+
+\begin{block}{Definição}
+	Conjunto de associações entre ocorrência de entidades.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Cardinalidade de Relacionamento}
+
+\begin{block}{Definição}
+É o número (mínimo, máximo) de ocorrências de entidade associadas a
+uma ocorrência da entidade em questão através do relacionamento.
+\end{block} \vfill
+
+	Classificação de relacionamentos binários:
+	\begin{itemize}
+	\item 1:1 (um-para-um);
+	\item 1:N (um-para-muitos);
+	\item N:N (muitos-para-muitos);
+	\end{itemize}
+\end{frame}
+
+\section{Abordagem Relacional}
+
+\begin{frame}
+\frametitle{Tabela}
+
+\begin{itemize}
+	\item É um conjunto não ordenado de linhas (tuplas);
+	\item Cada linha é composta por uma série de campos (valor do atributo);
+	\item Cada campo é identificado por nome de campo (nome de atributo); e
+	\item O conjunto de campos das linhas de uma tabela que possuem o
+	mesmo nome formam uma coluna.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Chave}
+
+\begin{block}{Definição}
+	E a forma na qual se estabelece relações entre linhas de tabelas de um
+	banco de dados relacional.
+\end{block}\vfill
+
+Tipos de chave:
+\begin{itemize}
+	\item Primária; e 
+	\item Estrangeira.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Chave Primária}
+
+\begin{block}{Definição}
+	É uma coluna ou uma combinação de colunas cujos valores distinguem uma linha das demais dentro de uma tabela.
+\end{block}\vfill
+
+\begin{exampleblock}{Departamento}
+\centering
+\begin{tabular}{|c|l|}
+		\hline
+		CODIGO & DESCRICAO \\ \hline
+		D1 & Compras \\ \hline
+		D2 & Engenharia \\ \hline
+		D3 & Vendas \\ \hline
+\end{tabular}
+\end{exampleblock}		
+\end{frame}
+
+\begin{frame}
+\frametitle{Chave Estrangeira}
+
+\begin{block}{Definição}
+  É uma coluna cujos valores aparecem necessariamente na chave primária de uma tabela.
+\end{block}\vfill
+
+\begin{exampleblock}{Empregado}
+\centering
+\begin{tabular}{|c|l|c|}
+	\hline
+	CODIGO & NOME & COD\_DEPART  \\ \hline
+	E1 & Souza & D1  \\ \hline
+	E2 & Santos & D2 \\ \hline
+	E3 & Silva &  D2\\ \hline
+	E4 & Soares & D3 \\ \hline
+\end{tabular}
+\end{exampleblock}		
+\end{frame}
+
+\section{Normalização}
+
+\begin{frame}
+\frametitle{Normalização}
+
+\begin{block}{Definição}
+	É uma regra que deve ser obedecida por uma tabela para que esta seja
+	considerada ``bem projetada''.
+\end{block} \vfill
+
+Tipos de normalização:
+\begin{itemize}
+	\item Primeira forma normal (1FN);
+	\item Segunda forma normal (2FN);
+	\item Terceira forma normal (3FN); e
+	\item Quarta forma normal (4FN).
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}
+\frametitle{Tabela Não Normalizada}
+
+\begin{exampleblock}{Projeto\_Empregado}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{| l | l | c | l | c | r | l | c | }
+\hline	
+COD\_PROJ & TIPO DESC & COD\_EMP & NOME & CAT & SAL & INI & DURAC \\\hline
+LSC001 & Desenvolvimento Sistema de Estoque &  2146 & João & A1 & 4 & 01/11/91 & 24 \\\hline
+LSC001 & Desenvolvimento Sistema de Estoque & 3145 & Sílvio & A2 & 4 & 02/10/91 & 24 \\\hline
+LSC001 & Desenvolvimento Sistema de Estoque & 6126 & José & B1 & 9 & 03/10/92 & 18 \\\hline
+LSC001 & Desenvolvimento Sistema de Estoque & 1214 & Carlos & A2 & 4 & 04/10/92 & 18 \\\hline
+LSC001 & Desenvolvimento Sistema de Estoque & 8191 & Mário & A1 & 4 &01/11/92 & 12 \\\hline
+PAG02 & Manutenção Sistema de RH & 8191 & Mário & A1 & 4 & 01/05/93 & 12 \\\hline
+PAG02 & Manutenção Sistema de RH & 4112 & João & A2 & 4 & 04/01/91 & 24 \\\hline
+PAG02 & Manutenção Sistema de RH & 6126 &José & B1 & 9 & 01/11/92& 12 \\\hline
+\end{tabular}
+}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Primeira Forma Normal (1FN)}
+
+\begin{block}{Definição}
+	Diz-se que uma tabela está na primeira forma normal, quando ela não contém tabelas aninhadas.
+\end{block}	
+\end{frame}
+
+\begin{frame}
+\frametitle{Tabela na 1FN}
+
+\begin{exampleblock}{Projeto}
+\centering
+\begin{tabular}{| l | l | l |}
+\hline
+COD & TIPO & DESC \\\hline
+LSC001 & Desenvolvimento & Sistema de Estoque \\\hline
+PAG02 & Manutenção & Sistema de RH \\\hline
+\end{tabular}
+\end{exampleblock}	\vfill
+
+\begin{exampleblock}{Empregado}
+\resizebox{\textwidth}{!}{
+\begin{tabular}{| l | c |  l | c | r | l | c |}
+	\hline
+	COD\_PROJ & COD\_EMP & NOME & CAT & SAL & INI & DURAC \\\hline
+	LSC001 & 2146 & João & A1 & 4 & 01/11/91 & 24 \\\hline
+	LSC001 & 3145 & Sílvio & A2 & 4 & 02/10/91 & 24 \\\hline
+	LSC001 & 6126 & José & B1 & 9 & 03/10/92 & 18 \\\hline
+	LSC001 & 1214 & Carlos & A2 & 4 & 04/10/92 & 18 \\\hline
+	LSC001  & 8191 & Mário & A1 & 4 & 01/11/92 & 12 \\\hline
+	PAG02 & 8191 & Mário & A1 & 4 & 01/05/93 & 12 \\\hline
+	PAG02 & 4112 & João & A2 & 4 & 04/01/91 & 24 \\\hline
+	PAG02 & 6126 & José & B1 & 9 & 01/11/92 & 12 \\\hline
+\end{tabular}
+}
+\end{exampleblock}	
+\end{frame}
+
+\begin{frame}
+\frametitle{Dependência Funcional}
+
+\begin{block}{Definição}
+	Diz-se que uma coluna C2 depende funcionalmente de uma coluna C1 (ou
+	que a coluna C1 determina a coluna C2) quando, em todas linhas da tabela,
+	para cada valor de C1 que aparece na tabela, aparece o mesmo valor de C2.
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+\centering
+\begin{tabular}{| c | r |}
+	\hline
+	CODIGO & SALARIO  \\\hline
+ E1 & 10 \\\hline
+ E3 & 10\\\hline
+ E1 & 10 \\\hline
+ E2 & 5 \\\hline
+ E3 & 10\\\hline
+ E2 & 5 \\\hline
+ E1 & 10\\\hline
+\end{tabular}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Segunda Forma Normal (2FN)}
+
+\begin{block}{Definição}
+	Uma tabela encontra-se na segunda forma normal, quando, além de estar na 1FN, não contém dependências parciais.
+\end{block}	
+\end{frame}
+
+\begin{frame}
+\frametitle{Tabela na 2FN}
+
+\begin{exampleblock}{Projeto\_Empregado}
+	\centering
+	\begin{tabular}{| l | c | l | c |}
+		\hline
+		COD\_PROJ & COD\_EMP &  INI & DURAC \\\hline
+		LSC001 & 2146 & 01/11/91 & 24 \\\hline
+		LSC001 & 3145 & 02/10/91 & 24 \\\hline
+		LSC001 & 6126 & 03/10/92 & 18 \\\hline
+		LSC001 & 1214 & 04/10/92 & 18 \\\hline
+		LSC001  & 8191 &01/11/92 & 12 \\\hline
+		PAG02 & 8191 & 01/05/93 & 12 \\\hline
+		PAG02 & 4112 & 04/01/91 & 24 \\\hline
+		PAG02 & 6126 &01/11/92 & 12 \\\hline
+	\end{tabular}
+\end{exampleblock}	
+\end{frame}
+
+\begin{frame}
+\frametitle{Tabela na 2FN}
+
+\begin{exampleblock}{Empregado}
+\centering
+\begin{tabular}{| c | l | c | r | }
+	\hline
+	COD\_EMP & NOME & CAT & SAL \\\hline
+	2146 & João & A1 & 4 \\\hline
+	3145 & Sílvio & A2 & 4 \\\hline
+	6126 & José & B1 & 9 \\\hline
+	1214 & Carlos & A2 & 4  \\\hline
+	8191 & Mário & A1 & 4  \\\hline
+	8191 & Mário & A1 & 4  \\\hline
+	4112 & João & A2 & 4  \\\hline
+	6126 & José & B1 & 9  \\\hline
+\end{tabular}
+\end{exampleblock}	
+\end{frame}
+
+\begin{frame}
+\frametitle{Terceira Forma Normal (3FN)}
+
+\begin{block}{Definição}
+	Uma tabela encontra-se na terceira forma normal, quando, além de estar na 2FN, não contém dependências transitivas.
+\end{block}	
+\end{frame}
+
+\begin{frame}
+\frametitle{Tabela na 3FN}
+
+\begin{exampleblock}{Empregado}
+	\centering
+	\begin{tabular}{| c | l | c | }
+		\hline
+		COD\_EMP & NOME & CAT \\\hline
+		2146 & João & A1  \\\hline
+		3145 & Sílvio & A2 \\\hline
+		6126 & José & B1 \\\hline
+		1214 & Carlos & A2 \\\hline
+		8191 & Mário & A1 \\\hline
+		8191 & Mário & A1 \\\hline
+		4112 & João & A2 \\\hline
+		6126 & José & B1 \\\hline
+	\end{tabular}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Tabela na 3FN}
+
+\begin{exampleblock}{Categoria}
+	\centering
+	\begin{tabular}{| c | r | }
+		\hline
+		CAT & SAL \\\hline
+		A1 & 4 \\\hline
+		A2 & 4 \\\hline
+		B1 & 9 \\\hline
+	\end{tabular}
+\end{exampleblock}	
+\end{frame}
+
+\begin{frame}
+\frametitle{Quarta Forma Normal (4FN)}
+
+\begin{block}{Definição}
+Uma tabela encontra-se na quarta forma normal, quando, além de estar na 3FN, não contém dependências multi-valoradas.
+\end{block}
+\end{frame}
+
+\begin{frame}
+\frametitle{Incluindo Nova Entidade}
+
+\begin{exampleblock}{Equipamento}
+	\centering
+	\begin{tabular}{| c | l | }
+		\hline
+		COD & DESC \\\hline
+		EQ1 & Projetor \\\hline
+		EQ2 & Notebook \\\hline
+		EQ3 & Roteador \\\hline
+	\end{tabular}
+\end{exampleblock}	
+\end{frame}
+
+\begin{frame}
+\frametitle{Incluindo Nova Entidade}
+
+\begin{exampleblock}{Projeto\_Empregado\_Equipamento}
+	\centering
+	\begin{tabular}{| c | c | c | }
+		\hline
+COD\_PROJ & COD\_EMP & COD\_EQUI \\\hline
+PAG02 & 8191 & EQ1 \\\hline
+PAG02 & 4112 & EQ1 \\\hline
+PAG02 & 6126 & EQ1 \\\hline
+PAG02 & 8191 & EQ2 \\\hline
+PAG02 & 4112 & EQ2 \\\hline
+PAG02 & 6126 & EQ2 \\\hline
+PAG02 & 8191 & EQ3 \\\hline
+PAG02 & 4112 & EQ3 \\\hline
+PAG02 & 6126 & EQ3 \\\hline
+\end{tabular}
+\end{exampleblock}	
+\end{frame}
+
+\begin{frame}
+\frametitle{Tabela na 4FN}
+
+\begin{exampleblock}{Projeto\_Equipamento}
+	\centering
+	\begin{tabular}{| c | r |}
+		\hline
+COD\_PROJ & COD\_EQUI \\\hline
+PAG02 & E1 \\\hline
+PAG02 & E2 \\\hline
+PAG02 & E3 \\\hline
+	\end{tabular}
+\end{exampleblock}
 \end{frame}
 
 \end{document}
