@@ -20,7 +20,7 @@ commentstyle=\color{green},
 %morecomment=[s][\color{green}]{/**}{*/},
 showspaces=false,
 showstringspaces=false,
-morekeywords={None,self,__init__},
+morekeywords={database,modify,references,delimiter,procedure,begin,function,return,returns,if,elseif,after,for,each,row},
 literate=
 {á}{{\'a}}1
 {Á}{{\'A}}1
@@ -527,6 +527,523 @@ PAG02 & E1 \\\hline
 PAG02 & E2 \\\hline
 PAG02 & E3 \\\hline
 	\end{tabular}
+\end{exampleblock}
+\end{frame}
+
+\section{Structured Query Language (SQL)}
+
+\begin{frame}
+\frametitle{Linguagem SQL}
+
+\begin{itemize}
+	\item É uma linguagem de pesquisa declarativa padrão para banco de dados relacional ;
+	\item Implementada no projeto de pesquisa do System R da IBM em
+	meados dos anos 70;
+	\item Padronizada em 1986 e melhorada em 1989;
+	\item SQL-2 ou SQL-92: Padrão hoje em vigor; e
+	\item SQL-3: Em fase de desenvolvimento. Vai estender o padrão atual com
+	conceitos de orientação a objeto e outros novos conceitos de BDs.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Comandos SQL}
+
+\begin{itemize}
+	\item Definição de dados; e
+	\item Manipulação dos dados.
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Comandos de Definição de Dados}
+
+\begin{itemize}
+	\item Criação e exclusão de banco de dados;
+	\item Criação, alteração e exclusão de tabela;
+	\begin{itemize}
+		\item Especificação de restrições;
+	\end{itemize}
+	\item Criação de visão;
+	\item Criação de procedimento armazenado;
+	\item Criação de função; e
+	\item Criação de gatilho.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Criando Banco de Dados}
+
+\begin{block}{Estrutura}
+\begin{lstlisting}
+CREATE DATABASE <nome do banco>;
+\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+\begin{lstlisting}
+CREATE DATABASE academico;
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Criando Tabela}
+
+\begin{block}{Estrutura}
+\begin{lstlisting}
+CREATE TABLE <nome da tabela>(
+   <nome do atributo 1> <tipo de dado>,
+   <nome do atributo 2> <tipo de dado>
+)
+\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+\begin{lstlisting}
+CREATE TABLE tb_aluno(
+   matricula INT,
+   nome VARCHAR(50),
+   sexo CHAR
+)
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Criando Tabela}
+
+\begin{exampleblock}{Exemplo}
+\begin{lstlisting}
+CREATE TABLE tb_disciplina(
+   identificador INT,
+   descricao VARCHAR(50),
+   credito INT
+)	
+\end{lstlisting}\vfill
+
+\begin{lstlisting}
+CREATE TABLE tb_disciplina_cursada(
+   matricula_aluno INT,
+   identificador_disciplina INT,
+   semestre INT,
+   ano INT,
+   nota FLOAT
+)	
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Alterando Tabela}
+
+\begin{block}{Estrutura}
+\begin{lstlisting}
+ALTER TABLE <nome da tabela> 
+ADD <nome do atributo> <tipo de dado>
+\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+\begin{lstlisting}
+ALTER TABLE tb_aluno
+ADD cpf VARCHAR(11)
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Comandos de Manipulação de Dados}
+
+\begin{itemize}
+	\item Inserir registros em tabelas;
+	\item Selecionando registros;
+	\item Atualizar registros em tabelas; e
+	\item Excluir registros em tabelas.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Inserindo Valores}
+
+\begin{block}{Estrutura}
+\begin{lstlisting}
+INSERT INTO <nome da tabela>
+(<nome do atributo 1>,<nome do atributo 2>)
+VALUES
+('valor 1','valor 2')
+\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+\begin{lstlisting}
+INSERT INTO tb_aluno
+(matricula,nome,sexo,cpf)
+VALUES
+('1','João da Silva','M','12345678')
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Selecionando Registros}
+
+\begin{block}{Estrutura}
+\begin{lstlisting}
+SELECT <nome do atributo 1>, <nome do atributo 2>
+FROM <nome da tabela>
+\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+\begin{lstlisting}
+SELECT matricula, nome
+FROM tb_aluno
+\end{lstlisting}
+\end{exampleblock}\vfill
+
+\alert{Caso necessite selecionar todos os atributos de uma única vez, deve-se
+	apenas utilizar o síbolo de asterisco (*) em substituição do(s) nome(s)
+	da(s) coluna(s).}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Cláusula WHERE}
+
+\begin{block}{Estrutura}
+\begin{lstlisting}
+SELECT <nome do atributo 1>, <nome do atributo 2>
+FROM <nome da tabela>
+WHERE <condição>
+\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+\begin{lstlisting}
+SELECT matricula, nome
+FROM tb_aluno
+WHERE matricula = '1'
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Conectores Relacionais}
+
+\begin{itemize}
+	\item igual: =;
+	\item maior: >;
+	\item menor: <;
+	\item maior igual: >=;
+	\item menor igual: <=;
+	\item diferente: <>;
+	\item entre: between; e
+	\item parte: like (Permitido o uso de máscara com \% entre aspas simples).
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Conectores Lógicos}
+
+\begin{itemize}
+	\item e: and;
+	\item ou: or;
+	\item é nulo: is null; e
+	\item não é nulo: is not null.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Atualizando Valores}
+
+\begin{block}{Estrutura}
+\begin{lstlisting}
+UPDATE <nome da tabela>
+SET <nome do atributo> = '<valor>'
+WHERE <condição>
+\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+\begin{lstlisting}
+UPDATE tb_aluno
+SET nome = 'João da Silva Filho'
+WHERE matricula = '1'
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Excluindo  Valores}
+
+\begin{block}{Estrutura}
+\begin{lstlisting}
+DELETE FROM <nome da tabela>
+WHERE <condição>
+\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+\begin{lstlisting}
+DELETE FROM tb_aluno
+WHERE matricula = '1'
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Especificando Restrições de Integridade}
+
+\begin{itemize}
+	\item Declarativas:
+	\begin{itemize}
+		\item Domínio;
+		\item Vazio;
+		\item Padrão;
+		\item Checagem;
+		\item Unicidade;
+		\item Chave primária; e
+		\item Referencial.
+	\end{itemize}
+	\item Procedimental:
+	\begin{itemize}
+	\item Procedimento armazenado
+	\item Função; e
+	\item Gatilho.
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Restrição de Vazio}
+
+\begin{exampleblock}{Exemplo}
+\begin{lstlisting}
+ALTER TABLE tb_aluno
+MODIFY COLUMN nome VARCHAR(30) NOT NULL;
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Restrição de Padrão}
+
+\begin{exampleblock}{Exemplo}
+\begin{lstlisting}
+ALTER TABLE tb_aluno
+ALTER sexo SET DEFAULT 'M';
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Restrição de Checagem}
+
+\begin{exampleblock}{Exemplo}
+\begin{lstlisting}
+ALTER TABLE tb_disciplina_cursada
+ADD CONSTRAINT ck_nota 
+CHECK (nota>=0 AND nota<=10);
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Restrição de Unicidade}
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+ALTER TABLE tb_aluno
+ADD CONSTRAINT uc_cpf
+UNIQUE (cpf);
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Restrição de Chave}
+
+\begin{exampleblock}{Exemplos}
+	\begin{lstlisting}
+ALTER TABLE tb_aluno
+ADD CONSTRAINT pk_aluno 
+PRIMARY KEY (matricula);
+	\end{lstlisting}
+
+	\begin{lstlisting}
+ALTER TABLE tb_disciplina
+ADD CONSTRAINT pk_disciplina 
+PRIMARY KEY (identificador);
+	\end{lstlisting}
+	
+	\begin{lstlisting}
+ALTER TABLE tb_disciplina_cursada
+ADD CONSTRAINT pk_tb_disciplina_cursada
+PRIMARY KEY (matricula_aluno,identificador_disciplina,semestre,ano)	
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Restrição de Referencial}
+
+\begin{exampleblock}{Exemplos}
+	\begin{lstlisting}
+ALTER TABLE tb_disciplina_cursada
+ADD CONSTRAINT fk_aluno
+FOREIGN KEY (matricula_aluno)
+REFERENCES tb_aluno(matricula);
+	\end{lstlisting}
+	
+	\begin{lstlisting}
+ALTER TABLE tb_disciplina_cursada
+ADD CONSTRAINT fk_disciplina
+FOREIGN KEY (identificador_disciplina)
+REFERENCES tb_disciplina(identificador);
+	\end{lstlisting}	
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Visão}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+CREATE VIEW <nome> AS
+<consulta sql>;
+	\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+CREATE VIEW vw_aluno AS
+SELECT nome, cpf
+FROM vw_aluno;
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Procedimento Armazenado}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+DELIMITER $
+
+CREATE PROCEDURE <nome>(<parâmetro> <tipo do parâmetro>)
+BEGIN
+    <comando sql>;
+END
+$
+	\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+DELIMITER $
+
+CREATE PROCEDURE inserir_aluno(a VARCHAR(30), b CHAR(1), c VARCHAR(11))
+BEGIN
+    INSERT INTO tb_aluno (nome, sexo,cpf) VALUES (a,b,c);
+END
+$	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Função}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+DELIMITER $
+
+CREATE FUNCTION <nome>(<parâmetro> <tipo do parâmentro>) 
+RETURNS <retorno do parâmentro>
+
+BEGIN
+    <código>;
+END
+$
+	\end{lstlisting}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Função}
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+DELIMITER $
+	
+CREATE FUNCTION desc_sexo(sexo char(1)) 
+RETURNS VARCHAR(10)
+
+BEGIN
+   IF SEXO = 'M' THEN
+      RETURN "MASCULINO";
+   ELSEIF SEXO = 'F' THEN
+      RETURN "FEMININO"; 
+   ELSE 
+      RETURN "NAO INFORMADO";
+END IF;
+END
+$
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Gatilho}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+DELIMITER $
+
+CREATE  TRIGGER <nome do gatilho> 
+AFTER [INSERT,UPDATE,DELETE] ON <nome da tabela> 
+FOR EACH ROW 
+BEGIN 
+   <comando sql>;
+END
+$
+	\end{lstlisting}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Gatilho}
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+CREATE TABLE tb_log_nota_disciplina(
+   aluno INT,
+   disciplina INT,
+   semestre INT,
+   ano INT,
+   nota_anterior FLOAT,
+   nota_atual FLOAT
+)
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Gatilho}
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+DELIMITER $
+
+CREATE  TRIGGER tg_historico_nota 
+AFTER UPDATE ON tb_disciplina_cursada 
+FOR EACH ROW 
+BEGIN 
+INSERT INTO tb_historico (aluno,disciplina,semestre,ano,nota_anterior,nota_atual) 
+VALUES
+(NEW.matricula_aluno,NEW.identificador_disciplina,NEW.semestre,NEW.ano,OLD.nota,NEW.nota); 
+END
+$
+	\end{lstlisting}
 \end{exampleblock}
 \end{frame}
 
