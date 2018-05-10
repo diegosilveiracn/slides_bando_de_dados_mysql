@@ -584,7 +584,13 @@ CREATE DATABASE <nome do banco>;
 \begin{lstlisting}
 CREATE DATABASE academico;
 \end{lstlisting}
-\end{exampleblock}
+\end{exampleblock}\vfill
+
+\begin{alertblock}{Cuidado}
+	\begin{lstlisting}
+DROP DATABASE <nome do banco>;
+	\end{lstlisting}
+\end{alertblock}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -607,7 +613,13 @@ CREATE TABLE tb_aluno(
    sexo CHAR
 )
 \end{lstlisting}
-\end{exampleblock}
+\end{exampleblock}\vfill
+
+\begin{alertblock}{Cuidado}
+	\begin{lstlisting}
+DROP TABLE <nome da tabela>;
+	\end{lstlisting}
+\end{alertblock}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -833,7 +845,14 @@ MODIFY COLUMN nome VARCHAR(30) NOT NULL;
 ALTER TABLE tb_aluno
 ALTER sexo SET DEFAULT 'M';
 \end{lstlisting}
-\end{exampleblock}
+\end{exampleblock}\vfill
+
+\begin{alertblock}{Cuidado}
+	\begin{lstlisting}
+ALTER TABLE <nome da tabela>
+ALTER <nome da coluna> DROP DEFAULT;
+	\end{lstlisting}
+\end{alertblock}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -845,7 +864,14 @@ ALTER TABLE tb_disciplina_cursada
 ADD CONSTRAINT ck_nota 
 CHECK (nota>=0 AND nota<=10);
 \end{lstlisting}
-\end{exampleblock}
+\end{exampleblock}\vfill
+
+\begin{alertblock}{Cuidado}
+	\begin{lstlisting}
+ALTER TABLE <nome da tabela>
+DROP CHECK <nome da restrição>;
+	\end{lstlisting}
+\end{alertblock}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -857,7 +883,14 @@ ALTER TABLE tb_aluno
 ADD CONSTRAINT uc_cpf
 UNIQUE (cpf);
 	\end{lstlisting}
-\end{exampleblock}
+\end{exampleblock}\vfill
+
+\begin{alertblock}{Cuidado}
+	\begin{lstlisting}
+ALTER TABLE <nome da tabela>
+DROP INDEX <nome da restrição>;
+	\end{lstlisting}
+\end{alertblock}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -881,7 +914,14 @@ ALTER TABLE tb_disciplina_cursada
 ADD CONSTRAINT pk_tb_disciplina_cursada
 PRIMARY KEY (matricula_aluno,identificador_disciplina,semestre,ano)	
 	\end{lstlisting}
-\end{exampleblock}
+\end{exampleblock}\vfill
+
+\begin{alertblock}{Cuidado}
+	\begin{lstlisting}
+ALTER TABLE <nome da tabela>
+DROP PRIMARY KEY;
+	\end{lstlisting}
+\end{alertblock}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -901,7 +941,14 @@ ADD CONSTRAINT fk_disciplina
 FOREIGN KEY (identificador_disciplina)
 REFERENCES tb_disciplina(identificador);
 	\end{lstlisting}	
-\end{exampleblock}
+\end{exampleblock}\vfill
+
+\begin{alertblock}{Cuidado}
+	\begin{lstlisting}
+ALTER TABLE <nome da tabela>
+DROP FOREIGN KEY <nome da restrição>;	
+\end{lstlisting}
+\end{alertblock}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -920,7 +967,13 @@ CREATE VIEW vw_aluno AS
 SELECT nome, cpf
 FROM vw_aluno;
 	\end{lstlisting}
-\end{exampleblock}
+\end{exampleblock}\vfill
+
+\begin{alertblock}{Cuidado}
+	\begin{lstlisting}
+DROP VIEW <nome da visão>;
+	\end{lstlisting}
+\end{alertblock}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -948,6 +1001,16 @@ BEGIN
 END
 $	\end{lstlisting}
 \end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Procedimento Armazenado}
+
+\begin{alertblock}{Cuidado}
+	\begin{lstlisting}
+DROP PROCEDURE <nome do procedimento>;
+	\end{lstlisting}
+\end{alertblock}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -989,7 +1052,13 @@ END IF;
 END
 $
 	\end{lstlisting}
-\end{exampleblock}
+\end{exampleblock}\vfill
+
+\begin{alertblock}{Cuidado}
+	\begin{lstlisting}
+DROP FUNCTION <nome da função>;
+	\end{lstlisting}
+\end{alertblock}
 \end{frame}
 
 \begin{frame}[fragile]
@@ -1007,13 +1076,9 @@ BEGIN
 END
 $
 	\end{lstlisting}
-\end{block}
-\end{frame}
+\end{block}\vfill
 
-\begin{frame}[fragile]
-\frametitle{Gatilho}
-
-\begin{exampleblock}{Exemplo}
+\begin{exampleblock}{Nova Tabela}
 	\begin{lstlisting}
 CREATE TABLE tb_log_nota_disciplina(
    aluno INT,
@@ -1026,6 +1091,7 @@ CREATE TABLE tb_log_nota_disciplina(
 	\end{lstlisting}
 \end{exampleblock}
 \end{frame}
+
 
 \begin{frame}[fragile]
 \frametitle{Gatilho}
@@ -1044,7 +1110,13 @@ VALUES
 END
 $
 	\end{lstlisting}
-\end{exampleblock}
+\end{exampleblock}\vfill
+
+\begin{alertblock}{Cuidado}
+	\begin{lstlisting}
+DROP TRIGGER <nome do gatilho>;
+	\end{lstlisting}
+\end{alertblock}
 \end{frame}
 
 \section{Consulta SQL}
