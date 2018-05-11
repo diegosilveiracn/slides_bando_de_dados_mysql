@@ -20,7 +20,8 @@ commentstyle=\color{green},
 %morecomment=[s][\color{green}]{/**}{*/},
 showspaces=false,
 showstringspaces=false,
-morekeywords={database,modify,references,delimiter,procedure,begin,function,return,returns,if,elseif,after,for,each,row},
+morekeywords={database,modify,references,delimiter,procedure,begin,function,
+	return,returns,if,elseif,after,for,each,row,is},
 literate=
 {á}{{\'a}}1
 {Á}{{\'A}}1
@@ -1092,7 +1093,6 @@ CREATE TABLE tb_log_nota_disciplina(
 \end{exampleblock}
 \end{frame}
 
-
 \begin{frame}[fragile]
 \frametitle{Gatilho}
 
@@ -1120,5 +1120,419 @@ DROP TRIGGER <nome do gatilho>;
 \end{frame}
 
 \section{Consulta SQL}
+
+\begin{frame}
+\frametitle{Exemplo de um Banco de Dados}
+
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Operação de Renomeação AS}
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+SELECT e.pnome AS nome
+FROM empregado AS e
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Cláusula GROUP BY}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+SELECT <nome do atributo 1>,<nome do atributo 2>
+FROM <nome da tabela>
+WHERE <condição>
+GROUP BY <nome do atributo>
+	\end{lstlisting}
+\end{block}\vfill
+
+Funções de grupo:
+\begin{itemize}
+	\item count();
+	\item min();
+	\item max();
+	\item sum(); ou
+	\item avg().
+\end{itemize}\vfill
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+SELECT e.sexo,
+COUNT (*)
+FROM empregado AS e
+GROUP BY e.sexo
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Cláusula HAVING}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+SELECT <nome do atributo 1>,<nome do atributo 2>
+FROM <nome da tabela>
+WHERE <condição>
+GROUP BY <nome do atributo>
+HAVING < condição>
+	\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+SELECT e.dno,
+AVG (e.salario)
+FROM empregado AS e
+GROUP BY e.dno
+HAVING AVG(e.salario) < 55000
+	\end{lstlisting}
+\end{exampleblock}\vfill
+
+\begin{alertblock}{Importante}
+Predicados da cláusula WHERE são aplicados depois da formação dos
+grupos.
+\end{alertblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Cláusula ORDER BY}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+SELECT <nome do atributo 1>,<nome do atributo 2>
+FROM <nome da tabela>
+WHERE <condição>
+ORDER BY <nome do atributo><tipo de ordenação>
+	\end{lstlisting}
+\end{block}\vfill
+
+Tipo de ordenação:
+\begin{itemize}
+	\item Ascendente: asc; ou
+	\item Descendente: desc.
+\end{itemize}\vfill
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+SELECT *
+FROM empregado AS e
+ORDER BY e.pnome DESC
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Operações de Conjunto}
+
+\begin{itemize}
+	\item União dos resultados de uma ou mais queries;
+	\item Interseção entre os resultados de duas queries; e
+	\item Subtração entre os resultados de duas queries.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Operações de Conjunto para União}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+<Primeira consulta>
+
+UNION
+
+<Segunda consulta>
+	\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+SELECT e.pnome,
+       e.sexo
+FROM empregado AS e
+
+UNION
+
+SELECT d. nome_dependente,
+       d.sexo
+FROM dependente AS d
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Operações de Conjunto para Interseção}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+<Primeira consulta>
+
+INTERSECT
+
+<Segunda consulta>
+	\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+SELECT e.pnome,
+       e.sexo
+FROM empregado AS e
+
+INTERSECT
+
+SELECT e.pnome,
+       e.sexo
+FROM empregado AS e
+WHERE e.superssn IS NOT NULL
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Operações de Conjunto para Subtração}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+<Primeira consulta>
+
+EXCEPT
+
+<Segunda consulta>
+\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+SELECT e.pnome,
+       e.sexo
+FROM empregado AS e
+
+EXCEPT
+
+SELECT e.pnome,
+       e.sexo
+FROM empregado AS e
+WHERE e.superssn IS NOT NULL
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Junções entre Tabelas}
+
+\begin{itemize}
+	\item Junção cruzada;
+	\item Junção interna; e
+	\item Junção externa:
+	\begin{itemize}
+		\item 	Esquerda;
+		\item Direita; ou
+		\item Completa.
+	\end{itemize}
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Junção Cruzada}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+SELECT <atributos>
+FROM <primeira tabela> CROSS JOIN <segunda tabela>
+	\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+SELECT e1.pnome,
+e2.pnome
+FROM empregado AS e1 CROSS JOIN empregado AS e2	
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Junção Interna}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+SELECT <atributo 1>,<atributo 2>
+FROM <primeira tabela> INNER JOIN <segunda tabela> ON (<condição>)
+	\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+SELECT e1.pnome,
+e2.pnome
+FROM empregado AS e1 INNER JOIN empregado AS e2 ON (e1.ssn = e2.superssn)
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Junção Externa a Esquerda}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+SELECT <atributo 1>,<atributo 2>
+FROM <primeira tabela> LEFT OUTER JOIN <segunda tabela> ON (<condição>)
+	\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+SELECT e1.pnome,
+e2.pnome
+FROM empregado AS e1 LEFT OUTER JOIN empregado AS e2 ON (e1.ssn = e2.superssn)
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Junção Externa a Direita}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+SELECT <atributo 1>,<atributo 2>
+FROM <primeira tabela> RIGHT OUTER JOIN <segunda tabela> ON (<condição>)
+	\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+SELECT e1.pnome,
+       e2.pnome
+FROM empregado AS e1 RIGHT OUTER JOIN empregado AS e2 ON (e1.ssn = e2.superssn)
+\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Junção Externa Completa}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+SELECT <atributo 1>,<atributo 2>
+FROM <primeira tabela> FULL OUTER JOIN <segunda tabela> ON (<condição>)
+	\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+SELECT e1.pnome,
+       e2.pnome
+FROM empregado AS e1 FULL OUTER JOIN empregado AS e2 ON (e1.ssn = e2.superssn)
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Subconsultas}
+
+\begin{itemize}
+	\item Na cláusula SELECT;
+	\item Na cláusula FROM; ou
+	\item Na cláusula WHERE.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Subconsulta na Cláusula Select}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+SELECT <atributo 1>,<atributo 2>,
+(<subconsulta>)
+FROM <tabela>	
+	\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+SELECT e.pnome,
+(SELECT COUNT(*) FROM dependente AS d WHERE e.ssn = d. essn) AS qt_dependente
+FROM empregado AS e	
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Subconsulta na Cláusula From}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+SELECT <atributo 1>,<atributo 2>
+FROM (<subconsulta>)	
+	\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+SELECT e.pnome,
+       d.qt_dependentes
+FROM empregado AS e
+INNER JOIN 
+( SELECT d.essn , COUNT (*) AS qt_dependentes
+  FROM dependente AS d
+  GROUP BY d. essn
+) AS d
+ON (e.ssn = d.essn)
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Expressões em Subconsulta}
+
+\begin{itemize}
+	\item in;
+	\item not in;
+	\item exists; e
+	\item not exists.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Subconsulta na Cláusula Where}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+SELECT <atributo 1>,<atributo 2>
+FROM <tabela>
+WHERE (subconsulta)	
+	\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+SELECT e.ssn,
+       e.pnome
+FROM empregado AS e
+WHERE e.ssn IN (SELECT d.essn
+                FROM dependente AS d
+                GROUP BY d.essn)	
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Subconsulta na Cláusula Where}
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+SELECT e.ssn,
+       e.pnome
+FROM empregado AS e
+WHERE EXISTS (SELECT d.essn
+              FROM dependente AS d
+              WHERE d.essn = e.ssn
+              GROUP BY d.essn)
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
 
 \end{document}
