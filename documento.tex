@@ -721,52 +721,6 @@ FROM tb_aluno
 \end{frame}
 
 \begin{frame}[fragile]
-\frametitle{Cláusula WHERE}
-
-\begin{block}{Estrutura}
-\begin{lstlisting}
-SELECT <nome do atributo 1>, <nome do atributo 2>
-FROM <nome da tabela>
-WHERE <condição>
-\end{lstlisting}
-\end{block}\vfill
-
-\begin{exampleblock}{Exemplo}
-\begin{lstlisting}
-SELECT matricula, nome
-FROM tb_aluno
-WHERE matricula = '1'
-\end{lstlisting}
-\end{exampleblock}
-\end{frame}
-
-\begin{frame}
-\frametitle{Conectores Relacionais}
-
-\begin{itemize}
-	\item igual: =;
-	\item maior: >;
-	\item menor: <;
-	\item maior igual: >=;
-	\item menor igual: <=;
-	\item diferente: <>;
-	\item entre: between; e
-	\item parte: like (Permitido o uso de máscara com \% entre aspas simples).
-\end{itemize}
-\end{frame}
-
-\begin{frame}
-\frametitle{Conectores Lógicos}
-
-\begin{itemize}
-	\item e: and;
-	\item ou: or;
-	\item é nulo: is null; e
-	\item não é nulo: is not null.
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
 \frametitle{Atualizando Valores}
 
 \begin{block}{Estrutura}
@@ -1139,6 +1093,53 @@ SELECT e.pnome AS nome
 FROM empregado AS e
 	\end{lstlisting}
 \end{exampleblock}
+\end{frame}
+
+\begin{frame}[fragile]
+\frametitle{Cláusula WHERE}
+
+\begin{block}{Estrutura}
+	\begin{lstlisting}
+SELECT <nome do atributo 1>, <nome do atributo 2>
+FROM <nome da tabela>
+WHERE <condição>
+	\end{lstlisting}
+\end{block}\vfill
+
+\begin{exampleblock}{Exemplo}
+	\begin{lstlisting}
+SELECT e.pnome, 
+       e.sexo
+FROM empregado AS e
+WHERE e.ssn = '888665555'
+	\end{lstlisting}
+\end{exampleblock}
+\end{frame}
+
+\begin{frame}
+\frametitle{Conectores Relacionais}
+
+\begin{itemize}
+\item igual: =;
+\item maior: >;
+\item menor: <;
+\item maior igual: >=;
+\item menor igual: <=;
+\item diferente: <>;
+\item entre: between; e
+\item parte: like (Permitido o uso de máscara com \% entre aspas simples).
+\end{itemize}
+\end{frame}
+
+\begin{frame}
+\frametitle{Conectores Lógicos}
+
+\begin{itemize}
+\item e: and;
+\item ou: or;
+\item é nulo: is null; e
+\item não é nulo: is not null.
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]
