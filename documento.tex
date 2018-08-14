@@ -1229,102 +1229,6 @@ ORDER BY e.pnome DESC
 \end{exampleblock}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Operações de Conjunto}
-
-\begin{itemize}
-	\item União dos resultados de uma ou mais queries;
-	\item Interseção entre os resultados de duas queries; e
-	\item Subtração entre os resultados de duas queries.
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Operações de Conjunto para União}
-
-\begin{block}{Estrutura}
-	\begin{lstlisting}
-<Primeira consulta>
-
-UNION
-
-<Segunda consulta>
-	\end{lstlisting}
-\end{block}\vfill
-
-\begin{exampleblock}{Exemplo}
-	\begin{lstlisting}
-SELECT e.pnome,
-       e.sexo
-FROM empregado AS e
-
-UNION
-
-SELECT d. nome_dependente,
-       d.sexo
-FROM dependente AS d
-	\end{lstlisting}
-\end{exampleblock}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Operações de Conjunto para Interseção}
-
-\begin{block}{Estrutura}
-	\begin{lstlisting}
-<Primeira consulta>
-
-INTERSECT
-
-<Segunda consulta>
-	\end{lstlisting}
-\end{block}\vfill
-
-\begin{exampleblock}{Exemplo}
-	\begin{lstlisting}
-SELECT e.pnome,
-       e.sexo
-FROM empregado AS e
-
-INTERSECT
-
-SELECT e.pnome,
-       e.sexo
-FROM empregado AS e
-WHERE e.superssn IS NOT NULL
-	\end{lstlisting}
-\end{exampleblock}
-\end{frame}
-
-\begin{frame}[fragile]
-\frametitle{Operações de Conjunto para Subtração}
-
-\begin{block}{Estrutura}
-	\begin{lstlisting}
-<Primeira consulta>
-
-EXCEPT
-
-<Segunda consulta>
-\end{lstlisting}
-\end{block}\vfill
-
-\begin{exampleblock}{Exemplo}
-	\begin{lstlisting}
-SELECT e.pnome,
-       e.sexo
-FROM empregado AS e
-
-EXCEPT
-
-SELECT e.pnome,
-       e.sexo
-FROM empregado AS e
-WHERE e.superssn IS NOT NULL
-	\end{lstlisting}
-\end{exampleblock}
-\end{frame}
-
 \begin{frame}
 \frametitle{Junções entre Tabelas}
 
@@ -1333,9 +1237,8 @@ WHERE e.superssn IS NOT NULL
 	\item Junção interna; e
 	\item Junção externa:
 	\begin{itemize}
-		\item 	Esquerda;
-		\item Direita; ou
-		\item Completa.
+		\item 	Esquerda; e
+		\item Direita;
 	\end{itemize}
 \end{itemize}
 \end{frame}
@@ -1416,25 +1319,6 @@ FROM empregado AS e1 RIGHT OUTER JOIN empregado AS e2 ON (e1.ssn = e2.superssn)
 \end{exampleblock}
 \end{frame}
 
-\begin{frame}[fragile]
-\frametitle{Junção Externa Completa}
-
-\begin{block}{Estrutura}
-	\begin{lstlisting}
-SELECT <atributo 1>,<atributo 2>
-FROM <primeira tabela> FULL OUTER JOIN <segunda tabela> ON (<condição>)
-	\end{lstlisting}
-\end{block}\vfill
-
-\begin{exampleblock}{Exemplo}
-	\begin{lstlisting}
-SELECT e1.pnome,
-       e2.pnome
-FROM empregado AS e1 FULL OUTER JOIN empregado AS e2 ON (e1.ssn = e2.superssn)
-	\end{lstlisting}
-\end{exampleblock}
-\end{frame}
-
 \begin{frame}
 \frametitle{Subconsultas}
 
@@ -1481,7 +1365,7 @@ SELECT e.pnome,
        d.qt_dependentes
 FROM empregado AS e
 INNER JOIN 
-( SELECT d.essn , COUNT (*) AS qt_dependentes
+( SELECT d.essn , COUNT(*) AS qt_dependentes
   FROM dependente AS d
   GROUP BY d. essn
 ) AS d
