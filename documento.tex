@@ -4,6 +4,7 @@
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage{listings}
+\usepackage{textcomp}
 
 \usepackage{adjustbox}
 
@@ -12,6 +13,7 @@
 
 \lstset{
 language=sql,
+upquote=true,
 basicstyle=\ttfamily\tiny,
 backgroundcolor=\color{white},
 keywordstyle=\color{blue}\bfseries,
@@ -709,7 +711,7 @@ CREATE TABLE <nome da tabela>(
 
 \begin{exampleblock}{Exemplo}
 \begin{lstlisting}
-CREATE TABLE tb_aluno(
+CREATE TABLE aluno(
    matricula INT,
    nome VARCHAR(50),
    sexo CHAR
@@ -729,7 +731,7 @@ DROP TABLE <nome da tabela>;
 
 \begin{exampleblock}{Exemplo}
 \begin{lstlisting}
-CREATE TABLE tb_disciplina(
+CREATE TABLE disciplina(
    identificador INT,
    descricao VARCHAR(50),
    credito INT
@@ -737,7 +739,7 @@ CREATE TABLE tb_disciplina(
 \end{lstlisting}\vfill
 
 \begin{lstlisting}
-CREATE TABLE tb_disciplina_cursada(
+CREATE TABLE disciplina_cursada(
    matricula_aluno INT,
    identificador_disciplina INT,
    semestre INT,
@@ -760,7 +762,7 @@ ADD <nome do atributo> <tipo de dado>
 
 \begin{exampleblock}{Exemplo}
 \begin{lstlisting}
-ALTER TABLE tb_aluno
+ALTER TABLE aluno
 ADD cpf VARCHAR(11)
 \end{lstlisting}
 \end{exampleblock}
@@ -791,7 +793,7 @@ VALUES
 
 \begin{exampleblock}{Exemplo}
 \begin{lstlisting}
-INSERT INTO tb_aluno
+INSERT INTO aluno
 (matricula,nome,sexo,cpf)
 VALUES
 ('1','João da Silva','M','12345678')
@@ -812,7 +814,7 @@ FROM <nome da tabela>
 \begin{exampleblock}{Exemplo}
 \begin{lstlisting}
 SELECT matricula, nome
-FROM tb_aluno
+FROM aluno
 \end{lstlisting}
 \end{exampleblock}\vfill
 
@@ -834,7 +836,7 @@ WHERE <condição>
 
 \begin{exampleblock}{Exemplo}
 \begin{lstlisting}
-UPDATE tb_aluno
+UPDATE aluno
 SET nome = 'João da Silva Filho'
 WHERE matricula = '1'
 \end{lstlisting}
@@ -853,7 +855,7 @@ WHERE <condição>
 
 \begin{exampleblock}{Exemplo}
 \begin{lstlisting}
-DELETE FROM tb_aluno
+DELETE FROM aluno
 WHERE matricula = '1'
 \end{lstlisting}
 \end{exampleblock}
@@ -887,7 +889,7 @@ WHERE matricula = '1'
 
 \begin{exampleblock}{Exemplo}
 \begin{lstlisting}
-ALTER TABLE tb_aluno
+ALTER TABLE aluno
 MODIFY COLUMN nome VARCHAR(30) NOT NULL;
 \end{lstlisting}
 \end{exampleblock}
@@ -898,7 +900,7 @@ MODIFY COLUMN nome VARCHAR(30) NOT NULL;
 
 \begin{exampleblock}{Exemplo}
 \begin{lstlisting}
-ALTER TABLE tb_aluno
+ALTER TABLE aluno
 ALTER sexo SET DEFAULT 'M';
 \end{lstlisting}
 \end{exampleblock}\vfill
@@ -916,7 +918,7 @@ ALTER <nome da coluna> DROP DEFAULT;
 
 \begin{exampleblock}{Exemplo}
 \begin{lstlisting}
-ALTER TABLE tb_disciplina_cursada
+ALTER TABLE disciplina_cursada
 ADD CONSTRAINT ck_nota 
 CHECK (nota>=0 AND nota<=10);
 \end{lstlisting}
@@ -935,7 +937,7 @@ DROP CHECK <nome da restrição>;
 
 \begin{exampleblock}{Exemplo}
 	\begin{lstlisting}
-ALTER TABLE tb_aluno
+ALTER TABLE aluno
 ADD CONSTRAINT uc_cpf
 UNIQUE (cpf);
 	\end{lstlisting}
@@ -954,20 +956,20 @@ DROP INDEX <nome da restrição>;
 
 \begin{exampleblock}{Exemplos}
 	\begin{lstlisting}
-ALTER TABLE tb_aluno
+ALTER TABLE aluno
 ADD CONSTRAINT pk_aluno 
 PRIMARY KEY (matricula);
 	\end{lstlisting}
 
 	\begin{lstlisting}
-ALTER TABLE tb_disciplina
+ALTER TABLE disciplina
 ADD CONSTRAINT pk_disciplina 
 PRIMARY KEY (identificador);
 	\end{lstlisting}
 	
 	\begin{lstlisting}
-ALTER TABLE tb_disciplina_cursada
-ADD CONSTRAINT pk_tb_disciplina_cursada
+ALTER TABLE disciplina_cursada
+ADD CONSTRAINT pk_disciplina_cursada
 PRIMARY KEY (matricula_aluno,identificador_disciplina,semestre,ano)	
 	\end{lstlisting}
 \end{exampleblock}\vfill
@@ -985,17 +987,17 @@ DROP PRIMARY KEY;
 
 \begin{exampleblock}{Exemplos}
 	\begin{lstlisting}
-ALTER TABLE tb_disciplina_cursada
+ALTER TABLE disciplina_cursada
 ADD CONSTRAINT fk_aluno
 FOREIGN KEY (matricula_aluno)
-REFERENCES tb_aluno(matricula);
+REFERENCES aluno(matricula);
 	\end{lstlisting}
 	
 	\begin{lstlisting}
-ALTER TABLE tb_disciplina_cursada
+ALTER TABLE disciplina_cursada
 ADD CONSTRAINT fk_disciplina
 FOREIGN KEY (identificador_disciplina)
-REFERENCES tb_disciplina(identificador);
+REFERENCES disciplina(identificador);
 	\end{lstlisting}	
 \end{exampleblock}\vfill
 
@@ -1019,9 +1021,9 @@ CREATE VIEW <nome> AS
 
 \begin{exampleblock}{Exemplo}
 	\begin{lstlisting}
-CREATE VIEW vw_aluno AS
+CREATE VIEW visao_aluno AS
 SELECT nome, cpf
-FROM vw_aluno;
+FROM aluno;
 	\end{lstlisting}
 \end{exampleblock}\vfill
 
@@ -1053,7 +1055,7 @@ DELIMITER $
 
 CREATE PROCEDURE inserir_aluno(a VARCHAR(30), b CHAR(1), c VARCHAR(11))
 BEGIN
-    INSERT INTO tb_aluno (nome, sexo,cpf) VALUES (a,b,c);
+    INSERT INTO aluno (nome, sexo,cpf) VALUES (a,b,c);
 END
 $	\end{lstlisting}
 \end{exampleblock}
@@ -1136,7 +1138,7 @@ $
 
 \begin{exampleblock}{Nova Tabela}
 	\begin{lstlisting}
-CREATE TABLE tb_log_nota_disciplina(
+CREATE TABLE log_nota_disciplina(
    aluno INT,
    disciplina INT,
    semestre INT,
@@ -1155,11 +1157,11 @@ CREATE TABLE tb_log_nota_disciplina(
 	\begin{lstlisting}
 DELIMITER $
 
-CREATE  TRIGGER tg_historico_nota 
-AFTER UPDATE ON tb_disciplina_cursada 
+CREATE  TRIGGER gatilho_historico_nota 
+AFTER UPDATE ON disciplina_cursada 
 FOR EACH ROW 
 BEGIN 
-INSERT INTO tb_historico (aluno,disciplina,semestre,ano,nota_anterior,nota_atual) 
+INSERT INTO log_nota_disciplina (aluno,disciplina,semestre,ano,nota_anterior,nota_atual) 
 VALUES
 (NEW.matricula_aluno,NEW.identificador_disciplina,NEW.semestre,NEW.ano,OLD.nota,NEW.nota); 
 END
